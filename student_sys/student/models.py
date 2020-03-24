@@ -2,9 +2,11 @@
 from __future__ import unicode_literals
 from django.db import models
 
+
 # Create your models here.
 
 class Student(models.Model):
+    objects = None
     SEX_ITEMS = [
         (1, '男'),
         (2, '女'),
@@ -21,7 +23,6 @@ class Student(models.Model):
     email = models.EmailField(verbose_name="Email")
     qq = models.CharField(max_length=128, verbose_name="QQ")
     phone = models.CharField(max_length=128, verbose_name="电话")
-
     status = models.IntegerField(choices=STATUS_ITEMS, default=0, verbose_name="审核状态")
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name="创建时间")
 
@@ -29,4 +30,8 @@ class Student(models.Model):
         return '<Student：{}>'.format(self.name)
 
     class Meta:
-        verbosr_name = verbose_name_plural = "学员信息"
+        verbose_name = verbose_name_plural = "学员信息"
+
+    @classmethod
+    def get_all(cls):
+        return cls.objects.all()
